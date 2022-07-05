@@ -1,0 +1,79 @@
+.booking {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.418);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bContainer {
+    background-color: white;
+    padding: 20px;
+    position: relative;
+}
+
+.bClose {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.bItem {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    padding: 20px;
+}
+
+.bItemInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.bTitle {
+    font-weight: 500;
+}
+
+.bDesc {
+    font-weight: 300;
+}
+
+.bMax {
+    font-size: 12px;
+}
+
+.bPrice {
+    font-weight: 500;
+}
+
+.bButton {
+    border: none;
+    padding: 10px 20px;
+    background-color: #0071c2;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.bSelectedRooms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    font-size: 8px;
+    color: gray;
+}
+
+.room {
+    display: flex;
+    flex-direction: column;
+}

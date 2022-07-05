@@ -70,6 +70,26 @@ export const updateRoom = async (req, res) => {
     }
 }
 
+
+export const updateRoomAvailability = async (req, res) => {
+    const { hotelid, roomid } = req.params;
+    const { dates } = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(hotelid)) return res.status(404).json({ message: 'No hotel was found with that id!' });
+    
+    try {
+        const updatedRoom = await Room.updateOne({ "roomNumbers._id": roomid }, {
+            $push: {
+                "roomNumbers.$.unavailableDates": dates
+            }
+        });
+
+        res.status(200).json({ message: 'Room status has been updated.' });
+    } catch (error) {
+        res.status(404).json({ message: 'No Room was found with that id!' });
+    }
+}
+
 export const deleteRoom = async (req, res) => {
     const { hotelid, roomid } = req.params;
     

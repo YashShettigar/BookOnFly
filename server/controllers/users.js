@@ -26,34 +26,32 @@ export const getUser = async (req, res) => {
 }
 
 export const login = async (req, res) => {
-    const { username, password, isAdmin } = req.body;
-
     try {
-        const existingUser = await User.findOne({ username });
+        const existingUser = await User.findOne({ username: req.body.username });
 
         if (!existingUser) return res.status(404).json({ message: "User doesn't exist." });
 
-        const isPasswordCorrect = await bcrypt.compare(password, existingUser.password);
+        const isPasswordCorrect = await bcrypt.compare(req.body.password, existingUser.password);
 
         if (!isPasswordCorrect) return res.status(404).json({ message: "Invalid credentials." });
 
         const token = jwt.sign({ id: existingUser._id, isAdmin: existingUser.isAdmin }, process.env.JWT_SALT);
 
-        res.cookie("accessToken", token, { httpOnly: true }).status(200).json({ message: "Logged in successfully." });
+        const { password, isAdmin, ...otherDetails } = existingUser._doc;
+
+        res.cookie("accessToken", token, { httpOnly: true }).status(200).json(otherDetails);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 }
 
 export const signup = async (req, res) => {
-    const { username, email, password, confirmPassword, isAdmin } = req.body;
+    const { username, email, password, isAdmin } = req.body;
 
     try {
         const existingUser = await User.findOne({ email });
 
         if (existingUser) return res.status(400).json({ message: 'User already exists.' });
-
-        if (password!=confirmPassword) return res.status(400).json({ message: 'Passwords don\'t match.' });
 
         const salt = bcrypt.genSaltSync(10);
         const hashedPassword = bcrypt.hashSync(password, salt);

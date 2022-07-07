@@ -84,7 +84,7 @@ const Hotel = () => {
                 onClick={() => handleMove("l")}
               />
               <div className="sliderWrapper">
-                <img src={data.photos[slideNumber]} alt="" className="sliderImg" />
+                <img src={data.photos[slideNumber].replace(/"/g, "")} alt="" className="sliderImg" />
               </div>
               <FontAwesomeIcon
                 icon={faCircleArrowRight}
@@ -111,7 +111,7 @@ const Hotel = () => {
                 <div className="hotelImgWrapper" key={i}>
                   <img
                     onClick={() => handleOpen(i)}
-                    src={photo}
+                    src={photo.replace(/"/g, "")}
                     alt=""
                     className="hotelImg"
                   />
